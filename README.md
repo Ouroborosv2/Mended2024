@@ -1,5 +1,184 @@
 # RestaurantRankerv2
+Deployment Checkpoints
+v1.0.0-clean-deploy
 
+Date: [Current Date]
+Description: Initial clean deployment build with working configuration
+Key Components:
+
+Next.js frontend
+PM2 for process management
+Nginx as reverse proxy
+ESLint properly configured
+SSL set up with Let's Encrypt
+
+RestaurantRanker
+Project Overview
+RestaurantRanker is a web application that allows users to rank restaurants using pairwise comparisons, integrates AI for predictive scoring, and provides personalized restaurant recommendations.
+Technology Stack
+
+Frontend: Next.js with TypeScript
+Backend: Node.js with Express and TypeScript
+Database: PostgreSQL
+ORM: Prisma
+API: GraphQL with Apollo Server
+Authentication: NextAuth.js with Google OAuth
+Deployment: AWS EC2, PM2, Nginx
+Version Control: GitLab
+
+Key Components
+
+Next.js frontend application
+PM2 for process management
+Nginx as a reverse proxy
+ESLint for code quality
+SSL certification with Let's Encrypt
+
+Deployment
+For detailed deployment instructions, please refer to DEPLOYMENT.md
+Troubleshooting
+ESLint Issues
+If encountering ESLint errors during build:
+
+Verify ESLint configuration in frontend/eslint.config.mjs
+Ensure all necessary ESLint plugins are installed in frontend/package.json
+Run yarn install in the frontend directory to update dependencies
+If issues persist, temporarily set ignoreDuringBuilds: true in next.config.js
+
+PM2 Process Management
+If the application doesn't start or restart properly:
+
+Check PM2 logs: pm2 logs
+Verify ecosystem.config.js configuration
+Ensure the correct working directory is set in PM2 config
+Manually start the application to check for errors: npm start in the frontend directory
+
+Nginx Configuration
+If the site is not accessible or SSL is not working:
+
+Check Nginx configuration in /etc/nginx/sites-available/mended.ca
+Verify Nginx is running: sudo systemctl status nginx
+Check Nginx error logs: sudo cat /var/log/nginx/error.log
+Ensure SSL certificates are properly set up and not expired
+
+Database Connectivity
+If experiencing database connection issues:
+
+Verify PostgreSQL is running: sudo systemctl status postgresql
+Check database connection string in .env file
+Ensure Prisma schema matches the database schema
+Run npx prisma db push to sync schema changes
+
+DNS and Domain Issues
+If the domain is not pointing to the correct server:
+
+Verify A record in DNS settings points to the correct IP address
+Check for proper propagation (can take up to 48 hours)
+Temporarily test using the server's IP address directly
+
+Environment Variables
+Ensure the following environment variables are set:
+
+DATABASE_URL: PostgreSQL connection string
+NEXTAUTH_URL: Full URL of your application (e.g., https://mended.ca)
+NEXTAUTH_SECRET: A random string for NextAuth.js security
+GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET: For Google OAuth
+
+Continuous Integration/Deployment
+
+GitLab CI/CD can be set up for automated deployments
+Refer to .gitlab-ci.yml for CI/CD configuration
+
+Development Workflow
+
+Develop and test features locally
+Push changes to GitLab
+CI/CD pipeline runs tests and linting
+Manual deployment using ./deploy.sh script
+
+Important Notes
+
+Always backup the database before major changes
+Regularly update dependencies and check for security vulnerabilities
+Monitor server resources, especially during high traffic periods
+Keep SSL certificates up to date (Let's Encrypt auto-renewal should be configured)
+
+Support and Contribution
+For support, please open an issue in the GitLab repository. Contributions are welcome via merge requests.
+
+Enhanced troubleshooting:
+After reviewing our conversation, here's a summary of the key troubleshooting steps and issues we addressed:
+
+SSH Key Authentication Issue:
+Problem: Unable to connect to EC2 instance due to permission denied (publickey) error.
+Solution:
+a. Adjusted permissions on the .pem file:
+Copy
+chmod 400 restaurantranker-key.pem
+b. Ensured correct file permissions using PowerShell:
+Copy
+icacls "C:\path\to\key.pem" /inheritance:r
+icacls "C:\path\to\key.pem" /grant:r "%USERNAME%":"(R)"
+ESLint Configuration Issues:
+Problem: ESLint errors during build process.
+Solution:
+a. Updated eslint.config.mjs with correct configuration:
+javascript
+Copy
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import nextPlugin from '@next/eslint-plugin-next';
+import { fixupConfigRules } from "@eslint/compat";
+
+export default [
+  // ... (configuration details)
+];
+b. Updated package.json with correct ESLint-related dependencies.
+c. Ran yarn install to ensure all dependencies were correctly installed.
+Yarn Command Recognition:
+Problem: Yarn commands not recognized.
+Solution:
+a. Ensured commands were run from the correct directory (frontend).
+b. Updated package.json scripts section to include:
+json
+Copy
+"scripts": {
+  "lint": "next lint"
+}
+ESLint Initial Setup:
+Problem: Configuring ESLint for the first time.
+Solution:
+a. Ran next lint and chose "Strict (recommended)" configuration.
+b. Created .eslintrc.json with:
+json
+Copy
+{
+  "extends": "next/core-web-vitals"
+}
+Domain Configuration:
+Problem: Setting up domain to point to EC2 instance.
+Solution:
+a. Added A records in GoDaddy DNS settings:
+@ (root domain) pointing to EC2 public IP
+www subdomain pointing to EC2 public IP
+b. Kept existing CNAME record for www subdomain.
+SSL Certificate Setup:
+Problem: Securing site with SSL using Let's Encrypt.
+Solution:
+a. Installed certbot:
+Copy
+sudo apt install certbot python3-certbot-nginx -y
+b. Ran certbot to obtain and install certificate:
+Copy
+sudo certbot --nginx -d mended.ca -d www.mended.ca
+To recreate this build:
+
+Clone the repository
+Checkout this tag: git checkout v1.0.0-clean-deploy
+Follow the deployment instructions in DEPLOYMENT.md
 
 
 ## Getting started

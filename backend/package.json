@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "ts-node-dev --respawn --transpile-only src/server.ts"
+  },
   "dependencies": {
+    "@graphql-tools/schema": "^10.0.4",
     "@prisma/client": "^5.16.1",
     "apollo-server-express": "^3.13.0",
     "dotenv": "^16.4.5",

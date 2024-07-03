@@ -17,7 +17,7 @@ module.exports = {
       user: "ubuntu",
       host: "mended.ca",
       ref: "origin/main",
-      repo: "git@gitlab.com:your-username/restaurantrankerv2.git",
+      repo: "git@gitlab.com:Ouroborosv2/restaurantrankerv2.git",
       path: "/home/ubuntu/restaurantrankerv2",
       "post-deploy": "./deploy.sh"
     }

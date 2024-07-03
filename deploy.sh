@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to the project root
-cd ~/restaurantrankerv2
+cd /home/ubuntu/restaurantrankerv2
 
 # Pull latest changes
 git pull origin main

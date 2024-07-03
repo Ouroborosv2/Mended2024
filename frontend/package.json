@@ -24,9 +24,12 @@
   "devDependencies": {
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.6.0",
-    "eslint": "9.x",
+    "@next/eslint-plugin-next": "^14.2.4",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "esl": "^11.2.1",
+    "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.34.3",
-    "globals": "^15.8.0",
-    "typescript-eslint": "^7.15.0"
+    "eslint-plugin-react-hooks": "^4.6.2"
   }
 }
